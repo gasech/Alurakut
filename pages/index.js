@@ -17,14 +17,16 @@ export default function Home() {
 
   return (
     <>
+    {/* Nav Bar Menu */}
     <AlurakutMenu/>
 
     <MainGrid>
-
+      {/* Profile Area */}
       <div className="profileArea" style={{gridArea: 'profileArea'}}>
         <ProfileSidebar githubUser={randomUser}/>
       </div>
 
+      {/* Welcome Area */}
       <div className="welcomeArea" style={{gridArea: 'welcomeArea'}}>
         <Box>
           <h2 className="title">Bem Vindo(a)</h2>
@@ -32,7 +34,9 @@ export default function Home() {
         </Box>
       </div>
       
+      {/* Profile Relations Area */}
       <div className="profileRelationsArea" style={{gridArea: 'profileRelationsArea'}}>
+        {/* Friends Box */}
         <ProfileRelationsBoxWrapper>
           <h2 className="smallTitle">Amigos {randomFriends.length}</h2>
           <ul>
@@ -49,6 +53,7 @@ export default function Home() {
           </ul>
         </ProfileRelationsBoxWrapper>
         
+        {/* Communities Box*/}
         <Box>
           <h2 className="smallTitle">Comunidades</h2>
         </Box>
