@@ -13,8 +13,9 @@ function ProfileSidebar(properties){
 
 export default function Home() {
   const randomUser = 'gasech';
-  const randomFriends = ['eduzznet','math-eusp'];
-
+  const randomFriends = ['eduzznet','math-eusp','teofilooooo'];
+  const attributes = {recados: 3,fotos: 2,videos: 1,fas: 14,mensagens: 40000,confiavel: 3,legal: 3,sexy: 3};
+  
   return (
     <>
     {/* Nav Bar Menu */}
@@ -30,7 +31,7 @@ export default function Home() {
       <div className="welcomeArea" style={{gridArea: 'welcomeArea'}}>
         <Box>
           <h2 className="title">Bem Vindo(a)</h2>
-          <OrkutNostalgicIconSet/>
+          <OrkutNostalgicIconSet {...attributes}/>
         </Box>
       </div>
       
