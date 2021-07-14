@@ -46,7 +46,7 @@ export const ProfileRelationsBoxWrapper = styled(Box)`
       left: 0;
       bottom: 0;
       z-indeX: 1;
-      background-image: linear-gradient(0deg,#00000073,transparent);
+      background-image: linear-gradient(0deg,#323232,transparent);
     }
   }
 `;

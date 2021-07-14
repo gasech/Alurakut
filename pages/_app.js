@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
-    background-color: #D9E6F6;
+    background-color: #212121;
   }
 
   #__next {
@@ -35,8 +35,11 @@ const GlobalStyle = createGlobalStyle`
 
 const theme = {
   colors: {
-    primary: '#0070f3',
-  },
+    primary: '#212121',
+    secundary: '#323232',
+    tertiary: '#0D7377', 
+    quaternary: '14FFEC'
+  }
 }
 
 export default function App({ Component, pageProps }) {
