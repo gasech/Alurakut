@@ -30,6 +30,18 @@ export default function Home() {
     title: 'Eu odeio acordar cedo',
     image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
   }]);
+  const [userfollowers, setFollowers] = React.useState([]);
+
+  React.useEffect(function() {
+    fetch(`https://api.github.com/users/${username}/followers`)
+    .then(function (serverAnswer){
+      return serverAnswer.json();
+    })
+    .then(function (finalAnswer){
+      setFollowers(finalAnswer);
+    })
+  }, [])
+
   const attributes = {recados: 10,fotos: 5,videos: 10,fas: 14,mensagens: 40000,confiavel: 3,legal: 3,sexy: 3};
   
   return (
@@ -90,6 +102,25 @@ export default function Home() {
                       <a href={`/users/${currentItem}`} key={currentItem}>
                         <img src={`https://github.com/${currentItem}.png`} />
                         <span>{currentItem}</span>
+                      </a>
+                    </li>
+                  )
+                }
+              })}
+          </ul>
+        </ProfileRelationsBoxWrapper>
+        
+        {/* Followers Box*/}
+        <ProfileRelationsBoxWrapper>
+          <h2 className="smallTitle">Seguidores {userfollowers.length}</h2>
+          <ul>
+              {userfollowers.map((currentItem, counter) => {
+                if(counter + 1 <= 6){
+                  return (
+                    <li key={currentItem.login}>
+                      <a href={`/users/${currentItem.login}`} key={currentItem.login}>
+                        <img src={`https://github.com/${currentItem.login}.png`} />
+                        <span>{currentItem.login}</span>
                       </a>
                     </li>
                   )
