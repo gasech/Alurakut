@@ -24,9 +24,9 @@ function ProfileSidebar(properties){
 }
 
 export default function Home() { 
-  const randomUser = 'gasech';
-  const randomFriends = ['eduzznet','math-eusp','teofilooooo'];
-  const [randomCommunities, setCommunities] = React.useState([{
+  const username = 'gasech';
+  const userfriends = ['eduzznet','math-eusp','teofilooooo'];
+  const [usercommunities, setCommunities] = React.useState([{
     title: 'Eu odeio acordar cedo',
     image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
   }]);
@@ -40,7 +40,7 @@ export default function Home() {
     <MainGrid>
       {/* Profile Area */}
       <div className="profileArea" style={{gridArea: 'profileArea'}}>
-        <ProfileSidebar githubUser={randomUser}/>
+        <ProfileSidebar githubUser={username}/>
       </div>
 
       {/* Welcome Area */}
@@ -57,12 +57,12 @@ export default function Home() {
             const dataForm = new FormData(e.target);
 
             const community = {
-              id: new Date().toISOString,
+              id: new Date().toISOString(),
               title: dataForm.get('title'),
               image: dataForm.get('image')
             }
 
-            const newCommunities = [...randomCommunities, community]
+            const newCommunities = [...usercommunities, community]
 
             setCommunities(newCommunities);
           }}>
@@ -78,40 +78,44 @@ export default function Home() {
       
       {/* Profile Relations Area */}
       <div className="profileRelationsArea" style={{gridArea: 'profileRelationsArea'}}>
+        
         {/* Friends Box */}
         <ProfileRelationsBoxWrapper>
-          <h2 className="smallTitle">Amigos {randomFriends.length}</h2>
+          <h2 className="smallTitle">Amigos {userfriends.length}</h2>
           <ul>
-              {randomFriends.map((index) => {
+              {userfriends.map((currentItem, counter) => {
+                if(counter + 1 <= 6){
                 return (
-                  <li key={index}>
-                    <a href={`/users/${index}`} key={index}>
-                      <img src={`https://github.com/${index}.png`} />
-                      <span>{index}</span>
-                    </a>
-                  </li>
-                )
+                    <li key={currentItem}>
+                      <a href={`/users/${currentItem}`} key={currentItem}>
+                        <img src={`https://github.com/${currentItem}.png`} />
+                        <span>{currentItem}</span>
+                      </a>
+                    </li>
+                  )
+                }
               })}
           </ul>
         </ProfileRelationsBoxWrapper>
         
         {/* Communities Box*/}
         <ProfileRelationsBoxWrapper>
-          <h2 className="smallTitle">Comunidades {randomCommunities.length}</h2>
+          <h2 className="smallTitle">Comunidades {usercommunities.length}</h2>
           <ul>
-              {randomCommunities.map((index) => {
-                return (
-                  <li key={index.id}>
-                    <a href={`/users/${index.title}`} key={index.id}>
-                      <img src={`${index.image}`} />
-                      <span>{index.title}</span>
-                    </a>
-                  </li>
-                )
+              {usercommunities.map((currentItem, counter) => {
+                if(counter + 1 <= 6){
+                  return (
+                    <li key={currentItem.id}>
+                      <a href={`/users/${currentItem.title}`} key={currentItem.id}>
+                        <img src={`${currentItem.image}`} />
+                        <span>{currentItem.title}</span>
+                      </a>
+                    </li>
+                  )
+                }
               })}
           </ul>
         </ProfileRelationsBoxWrapper>
-        
       </div>
     </MainGrid>
     </>
