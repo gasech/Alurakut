@@ -38,7 +38,7 @@ const theme = {
     primary: '#212121',
     secundary: '#323232',
     tertiary: '#0D7377', 
-    quaternary: '14FFEC'
+    quaternary: '#14FFEC'
   }
 }
 

@@ -25,22 +25,31 @@ function ProfileSidebar(properties){
 
 export default function Home() { 
   const username = 'gasech';
-  const userfriends = ['eduzznet','math-eusp','teofilooooo'];
-  const [usercommunities, setCommunities] = React.useState([{
-    title: 'Eu odeio acordar cedo',
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
-  }]);
-  const [userfollowers, setFollowers] = React.useState([]);
+  const [userfollowing, setFollowing] = React.useState([0]);
+
+  React.useEffect(function() {
+    fetch(`https://api.github.com/users/${username}/following`)
+    .then(function (serverResponse){
+      return serverResponse.json();
+    })
+    .then(function (finalAnswer){
+      setFollowing(finalAnswer);
+    })
+  }, [])
+  
+  const [userfollowers, setFollowers] = React.useState([0]);
 
   React.useEffect(function() {
     fetch(`https://api.github.com/users/${username}/followers`)
-    .then(function (serverAnswer){
-      return serverAnswer.json();
+    .then(function (serverResponse){
+      return serverResponse.json();
     })
     .then(function (finalAnswer){
       setFollowers(finalAnswer);
     })
   }, [])
+
+  const [usercommunities, setCommunities] = React.useState([]);
 
   const attributes = {recados: 10,fotos: 5,videos: 10,fas: 14,mensagens: 40000,confiavel: 3,legal: 3,sexy: 3};
   
@@ -91,17 +100,17 @@ export default function Home() {
       {/* Profile Relations Area */}
       <div className="profileRelationsArea" style={{gridArea: 'profileRelationsArea'}}>
         
-        {/* Friends Box */}
+        {/* Following Box */}
         <ProfileRelationsBoxWrapper>
-          <h2 className="smallTitle">Amigos {userfriends.length}</h2>
+        <h2 className="smallTitle">Seguindo {userfollowing.length}</h2>
           <ul>
-              {userfriends.map((currentItem, counter) => {
+              {userfollowing.map((currentItem, counter) => {
                 if(counter + 1 <= 6){
-                return (
-                    <li key={currentItem}>
-                      <a href={`/users/${currentItem}`} key={currentItem}>
-                        <img src={`https://github.com/${currentItem}.png`} />
-                        <span>{currentItem}</span>
+                  return (
+                    <li key={currentItem.login}>
+                      <a href={`/users/${currentItem.login}`} key={currentItem.login}>
+                        <img src={`https://github.com/${currentItem.login}.png`} />
+                        <span>{currentItem.login}</span>
                       </a>
                     </li>
                   )
