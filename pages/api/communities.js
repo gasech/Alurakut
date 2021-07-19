@@ -2,7 +2,7 @@ import { SiteClient } from 'datocms-client';
 
 export default async function requestReceiver(request, response) {
     if(request.method === 'POST'){
-        const FULLACCESSTOKEN = proccess.env.FULLACCESSTOKEN;
+        const FULLACCESSTOKEN = process.env.FULLACCESSTOKEN;
         const client = new SiteClient(FULLACCESSTOKEN);
 
         const createdRecord = await client.items.create({
