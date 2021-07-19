@@ -23,35 +23,65 @@ function ProfileSidebar(properties){
   )
 }
 
-export default function Home() { 
-  const username = 'gasech';
-  const [userfollowing, setFollowing] = React.useState([0]);
-
-  React.useEffect(function() {
-    fetch(`https://api.github.com/users/${username}/following`)
-    .then(function (serverResponse){
-      return serverResponse.json();
-    })
-    .then(function (finalAnswer){
-      setFollowing(finalAnswer);
-    })
-  }, [])
+export default function Home() {
+  const READONLYTOKEN = '78a13dc163dac5868b7cf963df2e7b';
   
-  const [userfollowers, setFollowers] = React.useState([0]);
+  const username = 'gasech';
 
-  React.useEffect(function() {
-    fetch(`https://api.github.com/users/${username}/followers`)
-    .then(function (serverResponse){
-      return serverResponse.json();
-    })
-    .then(function (finalAnswer){
-      setFollowers(finalAnswer);
-    })
-  }, [])
+  const [userfollowing, setFollowing] = React.useState([]);
+  
+  const [userfollowers, setFollowers] = React.useState([]);
 
   const [usercommunities, setCommunities] = React.useState([]);
 
   const attributes = {recados: 10,fotos: 5,videos: 10,fas: 14,mensagens: 40000,confiavel: 3,legal: 3,sexy: 3};
+
+  React.useEffect(function() {
+    // API GITHUB 
+    // FOLLOWING
+    fetch(`https://api.github.com/users/${username}/following`)
+    .then(function (serverResponse){
+      return serverResponse.json();
+    })
+    .then(function (finalResponse){
+      setFollowing(finalResponse);
+    })
+    // FOLLOWERS
+    fetch(`https://api.github.com/users/${username}/followers`)
+    .then(function (serverResponse){
+      return serverResponse.json();
+    })
+    .then(function (finalResponse){
+      setFollowers(finalResponse);
+    })
+
+    // API GraphQL DATOCMS
+    // COMMUNITIES
+    fetch('https://graphql.datocms.com/', {
+      method: 'POST', 
+      headers: {
+        'Authorization': READONLYTOKEN,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({ "query":`query {
+        allCommunities {
+          id
+          title
+          imageUrl
+          creatorName
+        }
+      }` })
+    })
+    .then(function (serverResponse){
+      return serverResponse.json();
+    })
+    .then(function (finalResponse){
+      const finalCommunities = finalResponse.data.allCommunities;
+
+      setCommunities(finalCommunities);
+    })
+  }, [])
   
   return (
     <>
@@ -78,14 +108,26 @@ export default function Home() {
             const dataForm = new FormData(e.target);
 
             const community = {
-              id: new Date().toISOString(),
               title: dataForm.get('title'),
-              image: dataForm.get('image')
+              imageUrl: dataForm.get('image'),
+              creatorName: username
             }
 
-            const newCommunities = [...usercommunities, community]
+            fetch('/api/communities', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(community)
+            })
+            .then(async (response) => {
+              const data = await response.json();
+              console.log(data.createdRecord);
+              const community = data.createdRecord;
 
-            setCommunities(newCommunities);
+              const newCommunities = [...usercommunities, community];
+              setCommunities(newCommunities)
+            })
           }}>
             <div>
               <input placeholder="Qual vai ser o nome da sua comunidade?" name="title" aria-label="Qual vai ser o nome da sua comunidade?" type="text"/>
@@ -146,8 +188,8 @@ export default function Home() {
                 if(counter + 1 <= 6){
                   return (
                     <li key={currentItem.id}>
-                      <a href={`/users/${currentItem.title}`} key={currentItem.id}>
-                        <img src={`${currentItem.image}`} />
+                      <a href={`/communities/${currentItem.title}`} key={currentItem.id}>
+                        <img src={`${currentItem.imageUrl}`} />
                         <span>{currentItem.title}</span>
                       </a>
                     </li>
