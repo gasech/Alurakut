@@ -24,7 +24,7 @@ function ProfileSidebar(properties){
 }
 
 export default function Home() {
-  const READONLYTOKEN = proccess.env.READONLYTOKEN;
+  const READONLYTOKEN = process.env.READONLYTOKEN;
   
   const username = 'gasech';
 
