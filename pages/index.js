@@ -36,10 +36,21 @@ export default function Home(props) {
 
   const [usercommunities, setCommunities] = React.useState([]);
 
+  const [userinfo, setUserInfo] = React.useState({});
+
   const attributes = {recados: 10,fotos: 5,videos: 10,fas: 14,mensagens: 40000,confiavel: 3,legal: 3,sexy: 3};
 
   React.useEffect(function() {
     // API GITHUB 
+    fetch(`https://api.github.com/users/${username}`)
+    .then(function (serverResponse){
+      return serverResponse.json();
+    })
+    .then(function (finalResponse){
+      setUserInfo(finalResponse);
+      console.log(finalResponse);
+    })
+
     // FOLLOWING
     fetch(`https://api.github.com/users/${username}/following`)
     .then(function (serverResponse){
@@ -146,7 +157,7 @@ export default function Home(props) {
         
         {/* Following Box */}
         <ProfileRelationsBoxWrapper>
-        <h2 className="smallTitle">Seguindo {userfollowing.length}</h2>
+        <h2 className="smallTitle">Seguindo {userinfo.following}</h2>
           <ul>
               {userfollowing.map((currentItem, counter) => {
                 if(counter + 1 <= 6){
@@ -165,7 +176,7 @@ export default function Home(props) {
         
         {/* Followers Box*/}
         <ProfileRelationsBoxWrapper>
-          <h2 className="smallTitle">Seguidores {userfollowers.length}</h2>
+          <h2 className="smallTitle">Seguidores {userinfo.followers}</h2>
           <ul>
               {userfollowers.map((currentItem, counter) => {
                 if(counter + 1 <= 6){
