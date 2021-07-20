@@ -1,84 +1,40 @@
-# Example app with styled-components
-
-This example features how you use a different styling solution than [styled-jsx](https://github.com/vercel/styled-jsx) that also supports universal styles. That means we can serve the required styles for the first render within the HTML and then load the rest in the client. In this case we are using [styled-components](https://github.com/styled-components/styled-components).
-
-For this purpose we are extending the `<Document />` and injecting the server side rendered styles into the `<head>`, and also adding the `babel-plugin-styled-components` (which is required for server side rendering). Additionally we set up a global [theme](https://www.styled-components.com/docs/advanced#theming) for styled-components using NextJS custom [`<App>`](https://nextjs.org/docs/advanced-features/custom-app) component.
-
-## Preview
-
-Preview the example live on [StackBlitz](http://stackblitz.com/):
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-styled-components)
-
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-styled-components&project-name=with-styled-components&repository-name=with-styled-components)
+# ![Alurakut Logo](https://alurakut.vercel.app/logo.svg)
+#### This project is made based on "Imersão Alura" **(7/12/2021 - 7/17/2021)**
 
 ## How to use
+This directory is currently **(7/20/21)** [deployed in Vercel](https://alurakut-five-nu.vercel.app/login), if you want to test using your Github Login name.
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+## How to develop
 
-```bash
-npx create-next-app --example with-styled-components with-styled-components-app
-# or
-yarn create next-app --example with-styled-components with-styled-components-app
+**Requirements:**
+* Node.js
+* Any IDE (e.g. VSCode)
+
+Clone the directory using ```git clone https://github.com/gasech/Alurakut.git```
+
+This project is using [DatoCMS](https://www.datocms.com/) data, so an account is needed to proceed. 
+
+Create a project and enter the dashboard, create a new model called `Community` and add the following Text Fields `Title` (title) `Image URL` (image_url) and `Creator` (creator_name).
+
+Add a file named `next.config.js` in the root of the directory and add the following code inside the file:
+
 ```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
-
-### Try it on CodeSandbox
-
-[Open this example on CodeSandbox](https://codesandbox.io/s/github/vercel/next.js/tree/canary/examples/with-styled-components)
-
-### Notes
-
-When wrapping a [Link](https://nextjs.org/docs/api-reference/next/link) from `next/link` within a styled-component, the [as](https://styled-components.com/docs/api#as-polymorphic-prop) prop provided by `styled` will collide with the Link's `as` prop and cause styled-components to throw an `Invalid tag` error. To avoid this, you can either use the recommended [forwardedAs](https://styled-components.com/docs/api#forwardedas-prop) prop from styled-components or use a different named prop to pass to a `styled` Link.
-
-<details>
-<summary>Click to expand workaround example</summary>
-<br />
-
-**components/StyledLink.js**
-
-```javascript
-import Link from 'next/link'
-import styled from 'styled-components'
-
-const StyledLink = ({ as, children, className, href }) => (
-  <Link href={href} as={as} passHref>
-    <a className={className}>{children}</a>
-  </Link>
-)
-
-export default styled(StyledLink)`
-  color: #0075e0;
-  text-decoration: none;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    color: #40a9ff;
+module.exports = {
+  env: {
+    FULLACCESSTOKEN:'YOUR-FULL-ACCESS-TOKEN',
+    READONLYTOKEN:'YOUR-READ-ONLY-TOKEN',
+    COMMUNITYTABLE:'YOUR-COMMUNITY-TABLE-ID'
   }
-
-  &:focus {
-    color: #40a9ff;
-    outline: none;
-    border: 0;
-  }
-`
+}
 ```
+First two tokens are located in DatoCMS. (Both tokens will look something like this `12a34bc456defc234257cfvcv3d351xyz`) 
 
-**pages/index.js**
+You can fill the  `COMMUNITYTABLE` with the id atached to your model (the Model ID will look like this `123456`)
 
-```javascript
-import StyledLink from '../components/StyledLink'
+**Getting started**
 
-export default () => (
-  <StyledLink href="/post/[pid]" forwardedAs="/post/abc">
-    First post
-  </StyledLink>
-)
-```
+Open Node.js command prompt or you can use the command prompt inside your IDE if desirable.
 
-</details>
+Go to your directory using `cd C:\Users\youruser\Documents\Alurakut`
+
+Type `npm run dev`, this should start the server. You can locally see the changes in `http://localhost:3000`.
