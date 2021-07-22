@@ -32,7 +32,7 @@ module.exports = {
 ```
 First two tokens are located in DatoCMS. (Both tokens will look something like this `12a34bc456defc234257cfvcv3d351xyz`) 
 
-You can fill the  `COMMUNITYTABLE` with the id atached to your model (the Model ID will look like this `123456`)
+You can fill the  `COMMUNITYTABLE` with the id attached to your model (the Model ID will look like this `123456`)
 
 **Getting started**
 
