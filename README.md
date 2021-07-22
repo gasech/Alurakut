@@ -19,7 +19,7 @@ This project is using [DatoCMS](https://www.datocms.com/) data, so an account is
 
 Create a project and enter the dashboard, create a new model called `Community` and add the following Text Fields `Title` (title) `Image URL` (image_url) and `Creator` (creator_name).
 
-Add a file named `next.config.js` in the root of the directory and add the following code inside the file:
+Create a file named `next.config.js` in the root of the directory and add the following code inside the file:
 
 ```
 module.exports = {
